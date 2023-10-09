@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <title>Task 1</title>
+  </head>
+  <body
+    style="
+      background-image: linear-gradient(to right, #005083, #23704e);
+      color: #fff;
+      text-transform: uppercase;
+    "
+  >
+    <div id="app">
+      <label
+        style="
+          display: flex;
+          align-items: center;
+          gap: 10px;
+          justify-content: center;
+          margin-top: 50px;
+        "
+      >
+        Введите количество пассажиров:
+        <input
+          type="number"
+          v-model="passengersCount"
+          style="padding: 5px 10px; border-radius: 5px"
+        />
+        <button
+          type="button"
+          @click="clearData"
+          style="padding: 5px 10px; border-radius: 5px; cursor: pointer;"
+        >
+          Очистить данные
+        </button>
+      </label>
+      <div
+        style="
+          display: flex;
+          align-items: center;
+          flex-direction: column;
+          justify-content: center;
+          gap: 10px;
+          margin-top: 20px;
+        "
+      >
+        РЕЗУЛЬТАТ
+        <div>
+          Необходимо автобусов, шт.:
+          <span style="color: rgb(251, 255, 26)">{{getBusCount}}</span>
+        </div>
+        <div>
+          Необходимо бутылок воды, ш:
+          <span style="color: rgb(251, 255, 26)">{{getBottleCount}} </span>
+        </div>
+        <div>
+          Количество бутербродов, шт.:
+          <span style="color: rgb(251, 255, 26)">{{getSandwichCount}}</span>
+        </div>
+      </div>
+    </div>
+    <script>
+      const { createApp } = Vue;
+
+      const SEATING_CAPACITY = 20;
+      const WATER_BOTTLE_COUNT = 2;
+      const SANDWICH_COUNT = 3;
+
+      createApp({
+        data() {
+          return {
+            passengersCount: null,
+          };
+        },
+        methods: {
+          clearData() {
+            this.passengersCount = null;
+          },
+        },
+        computed: {
+          getBusCount() {
+            return Math.ceil(this.passengersCount / SEATING_CAPACITY);
+          },
+          getBottleCount() {
+            return this.passengersCount * WATER_BOTTLE_COUNT;
+          },
+          getSandwichCount() {
+            return this.passengersCount * SANDWICH_COUNT;
+          },
+        },
+      }).mount("#app");
+    </script>
+  </body>
+</html>

@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <title>Task 2</title>
+  </head>
+  <body
+    style="
+      background-image: linear-gradient(to right, #005083, #23704e);
+      color: #fff;
+      text-transform: uppercase;
+    "
+  >
+    <div id="app">
+      <label
+        style="
+          display: flex;
+          align-items: center;
+          gap: 10px;
+          justify-content: center;
+          margin-top: 50px;
+        "
+      >
+        Введите номер месяца от 1 до 12:
+        <input
+          type="number"
+          v-model.number="monthNumber"
+          style="padding: 5px 10px; border-radius: 5px"
+        />
+        <button
+          type="text"
+          @click="getResult"
+          style="padding: 5px 10px; border-radius: 5px; cursor: pointer;"
+        >
+          Получить результат
+        </button>
+        <button
+          type="button"
+          @click="clearData"
+          style="padding: 5px 10px; border-radius: 5px; cursor: pointer;"
+        >
+          Очистить данные
+        </button>
+      </label>
+
+      <div
+        style="
+          display: flex;
+          align-items: center;
+          flex-direction: column;
+          justify-content: center;
+          gap: 10px;
+          margin-top: 20px;
+        "
+      >
+        РЕЗУЛЬТАТ
+        <div>
+          Вариант одежды:
+          <span style="color: rgb(251, 255, 26)">{{informMessage}}</span>
+        </div>
+        <div>
+          <img :src="seasonImage" style="width: 400px; height: 400px" />
+        </div>
+      </div>
+    </div>
+    <script>
+      const { createApp } = Vue;
+
+      createApp({
+        data() {
+          return {
+            informMessage: null,
+            monthNumber: null,
+            seasonImage:
+              "https://previews.123rf.com/images/kwasny221/kwasny2211310/kwasny221131000073/23191211-four-seasons-in-the-forest.jpg",
+          };
+        },
+        methods: {
+          getResult() {
+            switch (this.monthNumber) {
+              case 3:
+              case 4:
+              case 5:
+                {
+                  this.informMessage = "Штаны и кофта";
+                  this.seasonImage =
+                    "https://www.art2arts.co.uk/media/catalog/product/cache/d5996e589f780f8ad9b2ca7923039f74/d/e/dean_bluebells.jpg";
+                }
+
+                break;
+              case 6:
+              case 7:
+              case 8:
+                {
+                  this.informMessage = "Шорты и майка";
+                  this.seasonImage =
+                    "https://upload.wikimedia.org/wikipedia/commons/6/68/England_-_English_Summer_Forest_%287183018142%29.jpg";
+                }
+                break;
+              case 9:
+              case 10:
+              case 11:
+                {
+                  this.informMessage = "Штаны и куртка";
+                  this.seasonImage =
+                    "https://w0.peakpx.com/wallpaper/102/548/HD-wallpaper-autumn-forest-forest-colorful-fall-autumn-lovely-falling-woods-beautiful-trees-foliage-leaves-nice-nature-season.jpg";
+                }
+                break;
+              case 12:
+              case 1:
+              case 2:
+                {
+                  this.informMessage = "Теплая куртка и штаны";
+                  this.seasonImage =
+                    "https://images.pexels.com/photos/904423/pexels-photo-904423.jpeg?cs=srgb&dl=pexels-margerretta-904423.jpg&fm=jpg";
+                }
+                break;
+              default:
+                {
+                  this.informMessage = "Введите номер месяца от 1 до 12";
+                  this.monthNumber = null;
+                }
+                break;
+            }
+          },
+          clearData() {
+            this.monthNumber = null;
+            this.informMessage = null;
+            this.seasonImage =
+              "https://previews.123rf.com/images/kwasny221/kwasny2211310/kwasny221131000073/23191211-four-seasons-in-the-forest.jpg";
+          },
+        },
+      }).mount("#app");
+    </script>
+  </body>
+</html>

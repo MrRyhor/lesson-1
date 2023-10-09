@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <title>Task 5</title>
+    <link rel="stylesheet" href="./css/style.css" type="text/css" />
+  </head>
+  <body
+    style="
+      background-image: linear-gradient(to right, #005083, #23704e);
+      color: #fff;
+      text-transform: uppercase;
+    "
+  >
+    <div
+      id="app"
+      style="
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-direction: column;
+        gap: 20px;
+        margin-top: 50px;
+      "
+    >
+      <label style="display: flex; align-items: center; gap: 10px">
+        Login:
+        <input
+          type="text"
+          v-model="login"
+          style="padding: 5px 10px; border-radius: 5px"
+        />
+      </label>
+      <label style="display: flex; align-items: center; gap: 10px">
+        Password:
+        <input
+          type="password"
+          v-model="password"
+          style="padding: 5px 10px; border-radius: 5px"
+        />
+      </label>
+      <button
+        type="button"
+        style="cursor: pointer; padding: 5px 10px; border-radius: 5px"
+        @click="getAuth"
+      >
+        Go
+      </button>
+      <div style="margin-top: 30px">
+        <span :class="isAuth ? 'charge': 'withdraw'">{{informMessage}}</span>
+      </div>
+    </div>
+    <script>
+      const { createApp } = Vue;
+
+      const logList = [
+        { login: "Den", password: 123 },
+        { login: "Adam", password: 456 },
+        { login: "Julia", password: 789 },
+      ];
+
+      createApp({
+        data() {
+          return {
+            login: null,
+            password: null,
+            informMessage: null,
+            isAuth: false,
+          };
+        },
+        methods: {
+          getAuth() {
+            const findObj = logList.find((obj) => obj.login === this.login);
+            if (findObj) {
+              if (findObj.password == this.password) {
+                this.isAuth = true;
+                this.informMessage = "Поздравляю! Вы успешно залогинились";
+                this.login = null;
+                this.password = null;
+              }
+            } else {
+              this.isAuth = false;
+              this.informMessage = "Логин или пароль введён не верно";
+              this.login = null;
+              this.password = null;
+            }
+          },
+        },
+      }).mount("#app");
+    </script>
+  </body>
+</html>

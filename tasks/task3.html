@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <title>Task 3</title>
+  </head>
+  <body style="
+      background-image: linear-gradient(to right, #005083, #23704e);
+      color: #fff;
+      text-transform: uppercase;
+    ">
+    <div id="app">
+      <div
+        style="
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 10px;
+          margin-top: 50px;
+        "
+      >
+        <label>
+          Введите цифру начала диапазона:
+          <input
+            type="number"
+            v-model="startValue"
+            style="padding: 5px 10px; border-radius: 5px"
+          />
+        </label>
+        <label>
+          Введите цифру начала диапазона:
+          <input
+            type="number"
+            v-model="endValue"
+            style="padding: 5px 10px; border-radius: 5px"
+          />
+        </label>
+      </div>
+      <div
+        style="
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          margin-top: 20px;
+          gap: 10px;
+        "
+      >
+        <button type="button" @click = 'getRandomVal' style="padding: 5px 10px">
+          Получить число из диапазона
+        </button>
+        <button type="button" @click = 'clearData' style="padding: 5px 10px">Очистить диапазон</button>
+      </div>
+      <div
+        style="
+          display: flex;
+          align-items: center;
+          flex-direction: column;
+          justify-content: center;
+          gap: 10px;
+          margin-top: 20px;
+        "
+      >
+        РЕЗУЛЬТАТ
+        <div>
+          Случайное число из диапазона:
+          <span style="color: rgb(251, 255, 26)">{{resultVal}}</span>
+        </div>
+    </div>
+    <script>
+      const { createApp } = Vue;
+
+      createApp({
+        data() {
+          return {
+            startValue: null,
+            endValue: null,
+            resultVal: null
+          };
+        },
+        methods: {
+            getRandomVal () {
+                this.resultVal = this.startValue + Math.floor(Math.random() * (this.endValue - this.startValue + 1))
+                console.log(this.resultVal)
+                return this.resultVal
+            },
+            clearData () {
+                this.startValue = null
+                this.endValue = null
+                this.resultVal = null
+            }
+        }
+      }).mount("#app");
+    </script>
+  </body>
+</html>

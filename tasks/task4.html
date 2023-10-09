@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <title>Task 4</title>
+    <link rel="stylesheet" href="./css/style.css" type="text/css" />
+  </head>
+  <body
+    style="
+      background-image: linear-gradient(to right, #005083, #23704e);
+      color: #fff;
+      text-transform: uppercase;
+    "
+  >
+    <div
+      id="app"
+      style="
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        gap: 20px;
+        margin-top: 50px;
+      "
+    >
+      <div>
+        Сумма на счету, грн:
+        <span :class="isCharge ? 'charge':'withdraw'">{{totalAmount}}</span>
+      </div>
+      <label style="display: flex; align-items: center; gap: 10px">
+        Зачислить средства на счет, грн.:
+        <input
+          type="number"
+          v-model="chargeAmount"
+          style="padding: 5px 10px; border-radius: 5px"
+        />
+        <button
+          type="button"
+          @click="getChargeAccount"
+          style="cursor: pointer; padding: 5px 10px; border-radius: 5px"
+        >
+          Зачислить
+        </button>
+      </label>
+      <label style="display: flex; align-items: center; gap: 10px">
+        Снять средства со счета, грн.:
+        <input
+          type="number"
+          v-model="withdrawAmount"
+          style="padding: 5px 10px; border-radius: 5px"
+        />
+        <button
+          type="button"
+          @click="getWithdrawAccount"
+          style="cursor: pointer; padding: 5px 10px; border-radius: 5px"
+        >
+          Снять
+        </button>
+      </label>
+      <div>
+        Процент за обслуживание счета, грн.:
+        <span style="color: rgb(251, 255, 26)">{{getFee}}</span>
+      </div>
+      <hr />
+      <div>
+        Сумма в долларах, USD:
+        <span :class ="getDollarSum < 100 ? 'withdraw' : 'charge'">{{getDollarSum}}</span>
+      </div>
+      <div>
+        Сумма в евро, EURO:
+        <span :class = "getEuroSum < 100 ? 'withdraw' : 'charge'">{{getEuroSum}}</span>
+      </div>
+    </div>
+    <script>
+      const { createApp } = Vue;
+
+      createApp({
+        data() {
+          return {
+            totalAmount: 0,
+            chargeAmount: null,
+            withdrawAmount: null,
+            serviceFee: 0.03,
+            dollarRate: 37,
+            euroRate: 39,
+            isCharge: null,
+          };
+        },
+        methods: {
+          getChargeAccount() {
+            if (this.chargeAmount > 0) {
+              this.isCharge = true;
+              this.totalAmount += this.chargeAmount;
+              this.chargeAmount = null;
+            } else {
+              alert("Сумма не может быть отрицательной");
+              this.chargeAmount = null;
+            }
+          },
+          getWithdrawAccount() {
+            this.isCharge = false;
+            if (this.totalAmount - this.withdrawAmount < 0) {
+              alert(
+                `Недостаточно средств на счету. Вы можете снять ${this.totalAmount} грн.`
+              );
+              this.withdrawAmount = null;
+            } else {
+              this.totalAmount -= this.withdrawAmount;
+              this.withdrawAmount = null;
+            }
+          },
+        },
+        computed: {
+          getDollarSum() {
+            return (this.totalAmount / this.dollarRate).toFixed(2);
+          },
+          getEuroSum() {
+            return (this.totalAmount / this.euroRate).toFixed(2);
+          },
+          getFee() {
+            return (this.totalAmount * this.serviceFee).toFixed(2);
+          },
+        },
+      }).mount("#app");
+    </script>
+  </body>
+</html>
