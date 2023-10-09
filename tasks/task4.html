@@ -65,13 +65,20 @@
         <span style="color: rgb(251, 255, 26)">{{getFee}}</span>
       </div>
       <hr />
+      <div style="color: rgb(255, 3, 3); font-size: 24px">
+        {{informMessage}}
+      </div>
       <div>
         Сумма в долларах, USD:
-        <span :class ="getDollarSum < 100 ? 'withdraw' : 'charge'">{{getDollarSum}}</span>
+        <span :class="getDollarSum < 100 ? 'withdraw' : 'charge'"
+          >{{getDollarSum}}</span
+        >
       </div>
       <div>
         Сумма в евро, EURO:
-        <span :class = "getEuroSum < 100 ? 'withdraw' : 'charge'">{{getEuroSum}}</span>
+        <span :class="getEuroSum < 100 ? 'withdraw' : 'charge'"
+          >{{getEuroSum}}</span
+        >
       </div>
     </div>
     <script>
@@ -87,6 +94,7 @@
             dollarRate: 37,
             euroRate: 39,
             isCharge: null,
+            informMessage: null,
           };
         },
         methods: {
@@ -95,21 +103,21 @@
               this.isCharge = true;
               this.totalAmount += this.chargeAmount;
               this.chargeAmount = null;
+              this.informMessage = null;
             } else {
-              alert("Сумма не может быть отрицательной");
+              this.informMessage = "Сумма не может быть отрицательной";
               this.chargeAmount = null;
             }
           },
           getWithdrawAccount() {
             this.isCharge = false;
             if (this.totalAmount - this.withdrawAmount < 0) {
-              alert(
-                `Недостаточно средств на счету. Вы можете снять ${this.totalAmount} грн.`
-              );
+              this.informMessage = `Недостаточно средств на счету. Вы можете снять ${this.totalAmount} грн.`;
               this.withdrawAmount = null;
             } else {
               this.totalAmount -= this.withdrawAmount;
               this.withdrawAmount = null;
+              this.informMessage = null;
             }
           },
         },
