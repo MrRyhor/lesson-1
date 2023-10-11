@@ -57,9 +57,9 @@
       const { createApp } = Vue;
 
       const logList = [
-        { login: "Den", password: 123 },
-        { login: "Adam", password: 456 },
-        { login: "Julia", password: 789 },
+        { login: "Den", password: "123" },
+        { login: "Adam", password: "456" },
+        { login: "Julia", password: "789" },
       ];
 
       createApp({
@@ -73,14 +73,15 @@
         },
         methods: {
           getAuth() {
-            const findObj = logList.find((obj) => obj.login === this.login);
+            const findObj = logList.find(
+              (obj) =>
+                obj.login === this.login && obj.password === this.password
+            );
             if (findObj) {
-              if (findObj.password == this.password) {
-                this.isAuth = true;
-                this.informMessage = "Поздравляю! Вы успешно залогинились";
-                this.login = null;
-                this.password = null;
-              }
+              this.isAuth = true;
+              this.informMessage = "Поздравляю! Вы успешно залогинились";
+              this.login = null;
+              this.password = null;
             } else {
               this.isAuth = false;
               this.informMessage = "Логин или пароль введён не верно";
